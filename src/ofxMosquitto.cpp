@@ -2,6 +2,14 @@
 
 using namespace mosqpp;
 
+static string mosquittoKeyfilePath;
+
+static int pw_callback(char *buf, int size, int rwflag, void *userdata)
+{
+    strcpy(buf, mosquittoKeyfilePath.c_str());
+    return (int)mosquittoKeyfilePath.size();
+}
+
 ofxMosquitto::ofxMosquitto() : mosquittopp()
 {
     lib_init();
@@ -156,7 +164,7 @@ void ofxMosquitto::setTls(string cafile, string capath, string certfile, string 
     int ret;
     if (!keyfile.empty() && !keyfilePath.empty())
     {
-        ofxMosquitto::keyfilePath = keyfilePath;
+        mosquittoKeyfilePath = keyfilePath;
         check_error(tls_set(cafile.c_str(), capath.c_str(), certfile.c_str(), keyfile.c_str(), *pw_callback));
     }
     else

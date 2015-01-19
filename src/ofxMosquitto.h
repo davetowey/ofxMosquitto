@@ -76,7 +76,6 @@ private:
     bool bConnected;
     bool bAutoReconnect;
     void *userdata;
-    static string keyfilePath;
     
     void on_connect(int rc);
     void on_disconnect(int rc);
@@ -89,9 +88,5 @@ private:
     
     void check_error(int ret);
     
-    static int pw_callback(char *buf, int size, int rwflag, void *userdata)
-    {
-        strcpy(buf, keyfilePath.c_str());
-        return (int)keyfilePath.size();
-    }
+    
 };
